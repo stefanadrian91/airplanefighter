@@ -1,0 +1,11 @@
+canvas {
+        background: #eee;
+        display: block;
+        margin: 0 auto;
+        border-style: solid;
+        border-color: lightsteelblue;
+}
+
+button {
+        width: 480px;
+}
