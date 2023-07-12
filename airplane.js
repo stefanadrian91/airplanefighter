@@ -4,15 +4,21 @@ let plane_x = 240;
 let plane_y = 410;
 let rightPressed = false;
 let leftPressed = false;
+let spacePressed = false;
 let step = 40;
 let mine_x = 0;
 let mine_y = 0;
 let movingMines = [];
+let bullets = [];
 let columns = 12;
 let startingMines = 30;
 let score = 0;
 let scoreBonusOne = 0;
+let bombsDestroyed = 0;
 let second = 1;
+let bulletNumber = 0;
+let maxBullets = 60;
+let bulletStep = 5;
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -54,6 +60,10 @@ function keyDownHandler(e) {
     leftPressed = true;
   }
   move_plane();
+  if (e.key === " ") {
+  	spacePressed = true;
+  	loadBullets();
+  }
 }
 
 function keyUpHandler(e) {
@@ -61,6 +71,9 @@ function keyUpHandler(e) {
     rightPressed = false;
   } else if (e.key === "Left" || e.key === "ArrowLeft") {
     leftPressed = false;
+  }
+  if (e.key === " ") {
+  	spacePressed = false;
   }
 }
 
@@ -107,6 +120,7 @@ function main() {
 	setInterval(drawObstacle, 100);
 	setInterval(drawPlane, 100);
 	setInterval(updateScore, 1000);
+	setInterval(moveBullets, 10);
 	generateStartingMines();
 }
 
@@ -127,4 +141,61 @@ function gameOver(mineX, mineY) {
 		second = 0;
 		step = 0;
 	}
+}
+
+function loadBullets () {
+	bullets[bulletNumber] = ({x: plane_x, y: plane_y - 30});
+	moveBullets(bulletNumber);
+	++bulletNumber;
+	if (bulletNumber === maxBullets) {
+		bulletNumber = 0;
+	}
+}
+
+function moveBullets(bulletPosition) {
+	ctx.beginPath();
+	let img = new Image();
+	img.addEventListener(
+  	"load",
+  	() => {
+  		for (let i = 0; i < bulletNumber; ++i) {
+    		ctx.drawImage(img, bullets[i].x, bullets[i].y, step, step)
+    		ctx.clearRect(bullets[i].x, bullets[i].y + 30, 40, 10);
+    		if (bullets[i].y > -30) {
+    			bullets[i].y -= bulletStep;	
+    		}
+    		impactCheck(bullets[i].x, bullets[i].y, i);
+    	}
+  	},
+  	false
+	);
+	img.src = "bullet.png";
+	ctx.closePath();
+}
+
+function impactCheck (bulletX, bulletY, j) {
+	for (let i = 0; i < movingMines.length; ++i) {
+		if (movingMines[i].x === bulletX && movingMines[i].y === bulletY && movingMines[i].y > -30) {
+			movingMines[i] = [];
+			explosion(bulletX, bulletY);
+			replacingMines(i);
+			++bombsDestroyed;
+			bullets[j].y = -35;
+			document.getElementById("bombs").innerHTML = bombsDestroyed;	
+		}
+	}
+}
+
+function explosion (explosionX, explosionY) {
+	ctx.beginPath();
+	let img = new Image();
+	img.addEventListener(
+  	"load",
+  	() => {
+    	ctx.drawImage(img, explosionX, explosionY, step, step)
+  	},
+  	false
+	);
+	img.src = "impact.png";
+	ctx.closePath();
 }
