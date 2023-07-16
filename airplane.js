@@ -110,7 +110,7 @@ function generateStartingMines() {
 	}
 }
 
-function replacingMines(position) {
+function replaceMines(position) {
 	mine_x = (Math.floor(Math.random() * columns - 1) + 1) * step;
 	mine_y = -(Math.floor(Math.random() * columns - 1) + 1) * step;
 	movingMines[position] = ({x: mine_x, y: mine_y});
@@ -143,7 +143,7 @@ function gameOver(mineX, mineY) {
 	}
 }
 
-function loadBullets () {
+function loadBullets() {
 	bullets[bulletNumber] = ({x: plane_x, y: plane_y - 30});
 	moveBullets(bulletNumber);
 	++bulletNumber;
@@ -173,7 +173,7 @@ function moveBullets(bulletPosition) {
 	ctx.closePath();
 }
 
-function impactCheck (bulletX, bulletY, j) {
+function impactCheck(bulletX, bulletY, j) {
 	for (let i = 0; i < movingMines.length; ++i) {
 		if (movingMines[i].x === bulletX && movingMines[i].y === bulletY && movingMines[i].y > -30) {
 			movingMines[i] = [];
@@ -186,7 +186,7 @@ function impactCheck (bulletX, bulletY, j) {
 	}
 }
 
-function explosion (explosionX, explosionY) {
+function explosion(explosionX, explosionY) {
 	ctx.beginPath();
 	let img = new Image();
 	img.addEventListener(
