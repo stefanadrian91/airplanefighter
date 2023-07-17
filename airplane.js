@@ -1,24 +1,11 @@
 const canvas = document.getElementById("airplanefighter");
 const ctx = canvas.getContext("2d");
-let plane_x = 240;
-let plane_y = 410;
-let rightPressed = false;
-let leftPressed = false;
-let spacePressed = false;
+let plane_x = 240, plane_y = 410;
+let rightPressed = false, leftPressed = false, spacePressed = false;
 let step = 40;
-let mine_x = 0;
-let mine_y = 0;
-let movingMines = [];
-let bullets = [];
-let columns = 12;
-let startingMines = 30;
-let score = 0;
-let scoreBonusOne = 0;
-let bombsDestroyed = 0;
-let second = 1;
-let bulletNumber = 0;
-let maxBullets = 60;
-let bulletStep = 5;
+let mine_x = 0, mine_y = 0, movingMines = [], columns = 12, startingMines = 30;
+let score = 0, scoreBonusOne = 0, bombsDestroyed = 0, second = 1;
+let bulletNumber = 0, maxBullets = 60, bulletStep = 5, bullets = [];
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -26,17 +13,17 @@ document.addEventListener("keyup", keyUpHandler, false);
 function move_plane() {
 	ctx.clearRect(plane_x, plane_y, step, step);
 	drawPlane();
-	if(rightPressed) {
+	if (rightPressed) {
   	plane_x += step;
     if (plane_x + step > canvas.width){
     	plane_x = canvas.width - step;
     }
-  } else if(leftPressed) {
+  } else if (leftPressed) {
     	plane_x -= step;
-      if (plane_x < 0){
+      if (plane_x < 0) {
         plane_x = 0;
-       }
-    }
+      }
+  	}
 }
 
 function drawPlane() {
@@ -87,7 +74,7 @@ function drawObstacle() {
     		ctx.drawImage(img, movingMines[i].x, movingMines[i].y, step, step)
     		ctx.clearRect(movingMines[i].x, movingMines[i].y - 10, 40, 10);
     		if (movingMines[i].y === 490) {
-    			replacingMines(i);
+    			replaceMines(i);
     		}
     		if (movingMines[i].y === 400) {
     			bonusOne();
@@ -178,7 +165,7 @@ function impactCheck(bulletX, bulletY, j) {
 		if (movingMines[i].x === bulletX && movingMines[i].y === bulletY && movingMines[i].y > -30) {
 			movingMines[i] = [];
 			explosion(bulletX, bulletY);
-			replacingMines(i);
+			replaceMines(i);
 			++bombsDestroyed;
 			bullets[j].y = -35;
 			document.getElementById("bombs").innerHTML = bombsDestroyed;	
