@@ -14,15 +14,15 @@ function move_plane() {
 	ctx.clearRect(plane_x, plane_y, step, step);
 	drawPlane();
 	if (rightPressed) {
-  	plane_x += step;
-    if (plane_x + step > canvas.width){
-    	plane_x = canvas.width - step;
-    }
-  } else if (leftPressed) {
-    	plane_x -= step;
-      if (plane_x < 0) {
-        plane_x = 0;
-      }
+  		plane_x += step;
+    		if (plane_x + step > canvas.width){
+    			plane_x = canvas.width - step;
+    		}
+  	} else if (leftPressed) {
+    		plane_x -= step;
+      		if (plane_x < 0) {
+        		plane_x = 0;
+      		}
   	}
 }
 
