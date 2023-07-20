@@ -14,15 +14,15 @@ function move_plane() {
 	ctx.clearRect(plane_x, plane_y, step, step);
 	drawPlane();
 	if (rightPressed) {
-  	plane_x += step;
-    if (plane_x + step > canvas.width){
-    	plane_x = canvas.width - step;
-    }
-  } else if (leftPressed) {
-    	plane_x -= step;
-      if (plane_x < 0) {
-        plane_x = 0;
-      }
+  		plane_x += step;
+    		if (plane_x + step > canvas.width) {
+    			plane_x = canvas.width - step;
+    		}
+  	} else if (leftPressed) {
+    		plane_x -= step;
+      		if (plane_x < 0) {
+        		plane_x = 0;
+      		}
   	}
 }
 
@@ -30,11 +30,11 @@ function drawPlane() {
 	ctx.beginPath();
 	let img = new Image();
 	img.addEventListener(
-  	"load",
-  	() => {
-    	ctx.drawImage(img, plane_x, plane_y, step, step)
-  	},
-  	false
+  		"load",
+  		() => {
+    			ctx.drawImage(img, plane_x, plane_y, step, step)
+  		},
+  		false
 	);
 	img.src = "airplane.svg";
 	ctx.closePath();
@@ -68,22 +68,22 @@ function drawObstacle() {
 	ctx.beginPath();
 	let img = new Image();
 	img.addEventListener(
-  	"load",
-  	() => {
-  		for (let i = 0; i < movingMines.length; ++i) {
-    		ctx.drawImage(img, movingMines[i].x, movingMines[i].y, step, step)
-    		ctx.clearRect(movingMines[i].x, movingMines[i].y - 10, 40, 10);
-    		if (movingMines[i].y === 490) {
-    			replaceMines(i);
-    		}
-    		if (movingMines[i].y === 400) {
-    			bonusOne();
-    		}
-    		movingMines[i].y += 5;
-    		gameOver(movingMines[i].x, movingMines[i].y);
-    	}
-  	},
-  	false
+	  	"load",
+	  	() => {
+	  		for (let i = 0; i < movingMines.length; ++i) {
+	    			ctx.drawImage(img, movingMines[i].x, movingMines[i].y, step, step)
+	    			ctx.clearRect(movingMines[i].x, movingMines[i].y - 10, 40, 10);
+	    			if (movingMines[i].y === 490) {
+	    				replaceMines(i);
+	    			}
+	    			if (movingMines[i].y === 400) {
+	    				bonusOne();
+	    			}
+	    			movingMines[i].y += 5;
+	    			gameOver(movingMines[i].x, movingMines[i].y);
+	    		}
+		},
+	  	false
 	);
 	img.src = "mine.png";
 	ctx.closePath();
@@ -143,18 +143,18 @@ function moveBullets(bulletPosition) {
 	ctx.beginPath();
 	let img = new Image();
 	img.addEventListener(
-  	"load",
-  	() => {
-  		for (let i = 0; i < bulletNumber; ++i) {
-    		ctx.drawImage(img, bullets[i].x, bullets[i].y, step, step)
-    		ctx.clearRect(bullets[i].x, bullets[i].y + 30, 40, 10);
-    		if (bullets[i].y > -30) {
-    			bullets[i].y -= bulletStep;	
-    		}
-    		impactCheck(bullets[i].x, bullets[i].y, i);
-    	}
-  	},
-  	false
+	  	"load",
+	  	() => {
+	  		for (let i = 0; i < bulletNumber; ++i) {
+	    			ctx.drawImage(img, bullets[i].x, bullets[i].y, step, step)
+	    			ctx.clearRect(bullets[i].x, bullets[i].y + 30, 40, 10);
+	    			if (bullets[i].y > -30) {
+	    				bullets[i].y -= bulletStep;	
+	    			}
+	    		impactCheck(bullets[i].x, bullets[i].y, i);
+	    		}
+	  	},
+	  	false
 	);
 	img.src = "bullet.png";
 	ctx.closePath();
@@ -177,11 +177,11 @@ function explosion(explosionX, explosionY) {
 	ctx.beginPath();
 	let img = new Image();
 	img.addEventListener(
-  	"load",
-  	() => {
-    	ctx.drawImage(img, explosionX, explosionY, step, step)
-  	},
-  	false
+	  	"load",
+	  	() => {
+	    	ctx.drawImage(img, explosionX, explosionY, step, step)
+	  	},
+	  	false
 	);
 	img.src = "impact.png";
 	ctx.closePath();
