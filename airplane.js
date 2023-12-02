@@ -25,7 +25,7 @@ function move_plane() {
       if (plane_x < ZERO) {
         plane_x = ZERO;
       }
-  	}
+  }
 }
 
 function drawPlane() {
